@@ -1,0 +1,82 @@
+name: Run Datree
+
+on:
+  workflow_call:
+    inputs:
+
+      iteration:
+        required: true
+        type: string
+      
+      chart_folder:
+        required: true
+        type: string
+
+    secrets:
+
+      DATREE_TOKEN: 
+        description: 'Datree API token'
+        required: true
+
+env:
+  DATREE_TOKEN: ${{ secrets.DATREE_TOKEN }}
+
+jobs:
+
+  run_datree:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v3
+        with:
+          ref: 'main'
+
+      - name: Define template chart folder - original
+        if: ${{ inputs.iteration == '1'}}
+        run: echo "TEMPLATE=templates/${{ inputs.chart_folder }}_template.yaml" >> $GITHUB_ENV
+
+      - name: Define template chart folder - fixed
+        if: ${{ inputs.iteration == '2'}}
+        run: echo "TEMPLATE=fixed_templates/${{ inputs.chart_folder }}_${{ inputs.first_tool }}_fixed_template.yaml" >> $GITHUB_ENV
+
+      - name: Define template chart folder - functionalities
+        if: ${{ inputs.iteration == '3'}}
+        run: echo "TEMPLATE=functionality_templates/${{ inputs.chart_folder }}_func_template.yaml" >> $GITHUB_ENV
+
+      # - name: Datree CLI
+      #   id: datree
+      #   uses: datreeio/action-datree@v1.1.0
+      #   with:
+      #     path: '${{ env.TEMPLATE }}'
+      #     cliArguments: '--only-k8s-files --quiet --output json'
+      #     isHelmChart: true
+      #   continue-on-error: true
+      # This Action does not generate any output file!!!
+
+      # Install Datree
+      - name: Install Datree
+        id: datree
+        shell: bash
+        run: |
+          curl https://get.datree.io | /bin/bash
+          datree version
+
+      # Run Datree CLI
+      - name: Run Datree CLI
+        shell: bash
+        run: |
+          datree test ${{ env.TEMPLATE }} --only-k8s-files --quiet --output json > results_${{ inputs.iteration }}.json
+        continue-on-error: true
+
+      - name: Print Datree result
+        shell: bash
+        run: jq . results_${{ inputs.iteration }}.json
+
+      - name: Upload the JSON results artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: results_${{ inputs.iteration }}
+          path: results_${{ inputs.iteration }}.json
+          if-no-files-found: error
