@@ -50,15 +50,15 @@ jobs:
 
       - name: Rename KICS results
         shell: bash
-        run: mv results.json results_${{ inputs.iteration }}.json
+        run: mv results.json scan_results_${{ inputs.iteration }}.json
 
       - name: Print KICS result
         shell: bash
-        run: cat results_${{ inputs.iteration }}.json
+        run: cat scan_results_${{ inputs.iteration }}.json
 
       - name: Upload the JSON results artifact
         uses: actions/upload-artifact@v3
         with:
-          name: results_${{ inputs.iteration }}
-          path: results_${{ inputs.iteration }}.json
+          name: scan_results_${{ inputs.iteration }}
+          path: scan_results_${{ inputs.iteration }}.json
           if-no-files-found: error

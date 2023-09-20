@@ -55,17 +55,17 @@ jobs:
           framework: kubernetes
           skip_check: CKV_SECRET_6
           output_format: cli,json
-          output_file_path: console,results_${{ inputs.iteration }}.json
+          output_file_path: console,scan_results_${{ inputs.iteration }}.json
         continue-on-error: true
         # Reference: https://github.com/marketplace/actions/checkov-github-action
 
       - name: Print checkov result
         shell: bash
-        run: jq . results_${{ inputs.iteration }}.json
+        run: jq . scan_results_${{ inputs.iteration }}.json
 
       - name: Upload the JSON results artifact
         uses: actions/upload-artifact@v3
         with:
-          name: results_${{ inputs.iteration }}
-          path: results_${{ inputs.iteration }}.json
+          name: scan_results_${{ inputs.iteration }}
+          path: scan_results_${{ inputs.iteration }}.json
           if-no-files-found: error

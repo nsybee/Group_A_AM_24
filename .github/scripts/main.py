@@ -65,7 +65,7 @@ def main():
     if args.check:
         # Get ENV variables
         iteration = os.environ.get("iteration")
-        result_path = f"results_{iteration}.json"
+        result_path = f"scan_results_{iteration}.json"
 
         if iteration == "1":
             chart_folder = f"templates/{chart_folder}"
@@ -109,18 +109,12 @@ def main():
         json_path = f"functionality_profiles/{chart_folder}/{chart_folder}_functionality.json"
         add_functionalities.iterate_functionalities(chart_folder, json_path, tool)
 
-    # Generate Docker run command from YAML template
-    elif args.docker_run:
-        resource_path = os.environ.get("resource_path")
-        obj_path = os.environ.get("obj_path")
-        generate_docker_run.get_docker_run_cmd(chart_folder, resource_path, obj_path)
-
     # Count final checks
     elif args.count_checks:
         # Get ENV variables
         tool = os.environ.get("second_tool")
         iteration = os.environ.get("iteration")
-        result_path = f"results_{iteration}.json"
+        result_path = f"scan_results_{iteration}.json"
         count_checks.count_checks(result_path, tool)
 
     else:

@@ -55,7 +55,7 @@ def iterate_checks(chart_folder: str, json_path: str) -> None:
     all_checks = all_checks.split(", ")
     all_checks.sort()
     print(f"Total number of checks: {len(all_checks)}")
-    print(", ".join(all_checks))
+    # print(", ".join(all_checks))
     # For check_ from 0 to 66 (i.e., check_0, check_1, ..., check_66), print the
     # occurrences of each check in all_checks, all in one line
     # for i in range(0, 67):

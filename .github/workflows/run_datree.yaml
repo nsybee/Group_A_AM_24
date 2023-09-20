@@ -67,16 +67,16 @@ jobs:
       - name: Run Datree CLI
         shell: bash
         run: |
-          datree test ${{ env.TEMPLATE }} --only-k8s-files --quiet --output json > results_${{ inputs.iteration }}.json
+          datree test ${{ env.TEMPLATE }} --only-k8s-files --quiet --output json > scan_results_${{ inputs.iteration }}.json
         continue-on-error: true
 
       - name: Print Datree result
         shell: bash
-        run: jq . results_${{ inputs.iteration }}.json
+        run: jq . scan_results_${{ inputs.iteration }}.json
 
       - name: Upload the JSON results artifact
         uses: actions/upload-artifact@v3
         with:
-          name: results_${{ inputs.iteration }}
-          path: results_${{ inputs.iteration }}.json
+          name: scan_results_${{ inputs.iteration }}
+          path: scan_results_${{ inputs.iteration }}.json
           if-no-files-found: error

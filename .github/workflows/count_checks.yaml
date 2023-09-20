@@ -32,7 +32,7 @@ jobs:
       - name: Download tool JSON result artifact
         uses: actions/download-artifact@v2
         with:
-          name: results_${{ inputs.iteration }}
+          name: scan_results_${{ inputs.iteration }}
 
       - name: Install python packages
         shell: bash
