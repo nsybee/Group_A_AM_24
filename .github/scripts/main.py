@@ -21,11 +21,6 @@ import argparse
 import checkov_fix_chart
 import datree_fix_chart
 import kics_fix_chart
-import kubelinter_fix_chart
-import kubeaudit_fix_chart
-import kubescape_fix_chart
-import terrascan_fix_chart
-import add_functionalities
 import count_checks
 
 
@@ -59,7 +54,6 @@ def main():
     chart_folder = os.environ.get("chart_folder")
 
     tool = os.environ.get("first_tool")
-    # tool = os.environ.get("tool")
 
     # Fix the chart based on the results of a tool
     if args.check:
@@ -72,8 +66,6 @@ def main():
         elif iteration == "2" or iteration == "3":
             chart_folder = f"fixed_templates/{chart_folder}"
 
-        # result_path = f"test_files/{tool}_results.json"
-
         # Check if there are any failed tests
         if tool == "checkov":
             checkov_fix_chart.iterate_checks(chart_folder, result_path)
@@ -84,30 +76,9 @@ def main():
         elif tool == "kics":
             kics_fix_chart.iterate_checks(chart_folder, result_path)
 
-        elif tool == "kubelinter":
-            # check if result["Summary"]["ChecksStatus"] == "Failed"
-            kubelinter_fix_chart.iterate_checks(chart_folder, result_path)
-
-        elif tool == "kubeaudit":
-            # JSON format is not valid; failed checks are only given by file lines
-            kubeaudit_fix_chart.iterate_checks(chart_folder, result_path)
-
-        elif tool == "kubescape":
-            # "resourcesSeverityCounters" + "controlsSeverityCounters" + "ResourceCounters"
-            kubescape_fix_chart.iterate_checks(chart_folder, result_path)
-
-        elif tool == "terrascan":
-            # "runs" + "results"
-            terrascan_fix_chart.iterate_checks(chart_folder, result_path)
-
         else:
             print("Tool not supported. Exiting...")
             sys.exit(1)
-
-    # Add required functionality to the chart
-    elif args.add_func:
-        json_path = f"functionality_profiles/{chart_folder}/{chart_folder}_functionality.json"
-        add_functionalities.iterate_functionalities(chart_folder, json_path, tool)
 
     # Count final checks
     elif args.count_checks:

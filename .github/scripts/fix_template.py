@@ -162,6 +162,10 @@ def check_resource_path(path_list: str, document: dict) -> bool:
                 # If the namespace was added during fixing, ignore it
                 elif document["metadata"]["namespace"] == "test-ns":
                     return document["metadata"]["name"] == path_list[-1]
+                
+                # If the namespace was added during fixing, ignore it
+                elif document["metadata"]["namespace"] == "busybox-namespace":
+                    return document["metadata"]["name"] == path_list[-1]
 
                 elif document["metadata"]["namespace"] == "kube-system":
                     return document["metadata"]["name"] == path_list[-1]
@@ -237,7 +241,9 @@ def set_template(template: dict, check_id: str, check: dict) -> None:
         # Append Network Policy to the template
         net_policy1, net_policy2 = set_net_policy()
         template.append(net_policy1)
-        template.append(net_policy2)
+
+        # BusyBox Helm Chart
+        # template.append(net_policy2)
 
         # Set global variable to True
         global network_policy
@@ -1637,6 +1643,9 @@ def set_k8s_ns(obj: dict, value="test-ns"):
         obj (dict): K8s object to modify.
         value (str): The value to set the namespace to.
     """
+
+    # For BusyBoxHelmChart
+    value = "busybox-namespace"
 
     obj["metadata"]["namespace"] = value
 

@@ -19,10 +19,6 @@ import json
 import checkov_fix_chart
 import datree_fix_chart
 import kics_fix_chart
-import kubelinter_fix_chart
-import kubeaudit_fix_chart
-import kubescape_fix_chart
-import terrascan_fix_chart
 
 
 def count_checks(result_path: str, tool: str) -> list:

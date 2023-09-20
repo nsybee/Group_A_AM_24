@@ -33,12 +33,3 @@ spec:
         - /
       initialDelaySeconds: 30
       periodSeconds: 10
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: positive2-netpol
-  namespace: default
-spec:
-  podSelector: {}
-  policyTypes: []
