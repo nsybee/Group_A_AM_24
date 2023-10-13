@@ -183,6 +183,8 @@ metadata:
     app.kubernetes.io/instance: release-name
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: primary
+  annotations:
+    seccomp.security.alpha.kubernetes.io/pod: runtime/default
 spec:
   replicas: 1
   podManagementPolicy: ''
@@ -220,25 +222,27 @@ spec:
         nodeAffinity: null
       securityContext:
         fsGroup: 1001
+        runAsUser: 25000
+        seccompProfile:
+          type: RuntimeDefault
       initContainers: null
       containers:
       - name: mysql
-        image: docker.io/bitnami/mysql:8.0.32-debian-11-r21
-        imagePullPolicy: IfNotPresent
+        image: docker.io/bitnami/mysql:5@sha256:188121394576d05aedb5daf229403bf58d4ee16e04e81828e4d43b72bd227bc2
+        imagePullPolicy: Always
         securityContext:
           runAsNonRoot: true
-          runAsUser: 1001
+          runAsUser: 25000
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
         env:
         - name: BITNAMI_DEBUG
           value: 'false'
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: release-name-mysql
-              key: mysql-root-password
         - name: MYSQL_DATABASE
           value: my_database
-        envFrom: null
         ports:
         - name: mysql
           containerPort: 3306
@@ -287,17 +291,24 @@ spec:
             memory: 512Mi
           requests:
             cpu: 250m
-            memory: null
+            memory: 512Mi
         volumeMounts:
         - name: data
           mountPath: /bitnami/mysql
         - name: config
           mountPath: /opt/bitnami/mysql/conf/my.cnf
           subPath: my.cnf
+        - name: secret-volume
+          readOnly: true
+          mountPath: /etc/secret-volume
       volumes:
       - name: config
         configMap:
           name: release-name-mysql
+      - name: secret-volume
+        secret:
+          secretName: my-secret
+      automountServiceAccountToken: false
   volumeClaimTemplates:
   - metadata:
       name: data
