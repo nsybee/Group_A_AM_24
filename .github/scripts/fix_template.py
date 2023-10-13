@@ -237,6 +237,9 @@ def set_template(template: dict, check_id: str, check: dict) -> None:
 
     # If Network Policy missing issue, create and append one
     elif check_id == "check_40":
+
+        pass
+
         # app = get_app_label(template, check["resource_path"])
         # Append Network Policy to the template
         net_policy1, net_policy2 = set_net_policy()
