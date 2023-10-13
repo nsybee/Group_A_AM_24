@@ -33,3 +33,12 @@ jobs:
       iteration: 1
       chart_folder: ${{ inputs.chart_folder }}
       first_tool: ${{ inputs.first_tool }}
+
+  debug:
+    needs: [step_1, step_2]
+    uses: ./.github/workflows/run_checker.yaml
+    with:
+      iteration: 2
+      chart_folder: ${{ inputs.chart_folder }}
+      first_tool: ${{ inputs.first_tool }}
+    secrets: inherit
