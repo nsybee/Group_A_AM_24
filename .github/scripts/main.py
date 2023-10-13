@@ -19,7 +19,7 @@ import sys
 import os
 import argparse
 import checkov_fix_chart
-import datree_fix_chart
+import kubescape_fix_chart
 import kics_fix_chart
 import count_checks
 
@@ -67,14 +67,14 @@ def main():
             chart_folder = f"fixed_templates/{chart_folder}"
 
         # Check if there are any failed tests
-        if tool == "checkov":
+        if tool == "checkov" or tool == "Checkov":
             checkov_fix_chart.iterate_checks(chart_folder, result_path)
 
-        elif tool == "datree":
-            datree_fix_chart.iterate_checks(chart_folder, result_path)
-
-        elif tool == "kics":
+        elif tool == "kics" or tool == "KICS":
             kics_fix_chart.iterate_checks(chart_folder, result_path)
+
+        elif tool == "kubescape" or tool == "Kubescape":
+            kubescape_fix_chart.iterate_checks(chart_folder, result_path)
 
         else:
             print("Tool not supported. Exiting...")

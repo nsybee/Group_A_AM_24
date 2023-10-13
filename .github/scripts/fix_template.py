@@ -1894,8 +1894,7 @@ def set_net_policy(name="test-network-policy") -> dict:
         },
         'spec': {
             'podSelector': {},
-            'ingress': [{}],
-            'policyTypes': ['Ingress']
+            'policyTypes': []
         }
     }
 

@@ -17,7 +17,7 @@
 
 import json
 import checkov_fix_chart
-import datree_fix_chart
+import kubescape_fix_chart
 import kics_fix_chart
 
 

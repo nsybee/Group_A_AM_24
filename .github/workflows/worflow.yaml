@@ -15,12 +15,6 @@ on:
         required: true
         default: 'checkov'
         type: string
-      
-      second_tool:
-        description: 'The second tool to analyze the chart'
-        required: true
-        default: 'checkov'
-        type: string 
 
 jobs:
 
@@ -39,21 +33,3 @@ jobs:
       iteration: 1
       chart_folder: ${{ inputs.chart_folder }}
       first_tool: ${{ inputs.first_tool }}
-
-  debug:
-    needs: [step_1, step_2]
-    uses: ./.github/workflows/run_checker.yaml
-    with:
-      iteration: 2
-      chart_folder: ${{ inputs.chart_folder }}
-      first_tool: ${{ inputs.first_tool }}
-    secrets: inherit
-
-  step_3:
-    needs: [step_1, step_2, debug]
-    uses: ./.github/workflows/run_checker.yaml
-    with:
-      iteration: 2
-      chart_folder: ${{ inputs.chart_folder }}
-      second_tool: ${{ inputs.second_tool }}
-    secrets: inherit
