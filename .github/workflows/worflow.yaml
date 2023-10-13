@@ -5,13 +5,13 @@ on:
     inputs:
 
       chart_folder:
-        description: 'The path to the Helm Chart folder'
+        description: 'The name of the Helm Chart'
         required: true
         default: 'busybox'
         type: string
 
       first_tool:
-        description: 'The first tool to analyze the chart'
+        description: 'The tool to analyze the chart'
         required: true
         default: 'checkov'
         type: string
