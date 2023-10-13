@@ -18,21 +18,21 @@ on:
 jobs:
 
   run_checkov_first:
-    if: ${{ inputs.first_tool == 'checkov' }} or ${{ inputs.first_tool == 'Checkov' }}
+    if: ${{ inputs.first_tool == 'checkov' or inputs.first_tool == 'Checkov' }}
     uses: ./.github/workflows/run_checkov.yaml
     with:
       iteration: ${{ inputs.iteration }}
       chart_folder: ${{ inputs.chart_folder }}
 
   run_kics_first:
-    if: ${{ inputs.first_tool == 'kics' }} or ${{ inputs.first_tool == 'KICS' }}
+    if: ${{ inputs.first_tool == 'kics' or inputs.first_tool == 'KICS' }}
     uses: ./.github/workflows/run_kics.yaml
     with:
       iteration: ${{ inputs.iteration }}
       chart_folder: ${{ inputs.chart_folder }}
 
   run_kubescape_first:
-    if: ${{ inputs.first_tool == 'kubescape' }} or ${{ inputs.first_tool == 'Kubescape' }}
+    if: ${{ inputs.first_tool == 'kubescape' or inputs.first_tool == 'Kubescape' }}
     uses: ./.github/workflows/run_kubescape.yaml      
     with:
       iteration: ${{ inputs.iteration }}
