@@ -41,7 +41,7 @@ jobs:
         uses: kubescape/github-action@main
         with:
           format: json
-          outputFile: results_${{ inputs.iteration }}.json
+          outputFile: scan_results_${{ inputs.iteration }}.json
           files: "${{ env.TEMPLATE }}"
           exceptions: kubescape_exceptions.yaml
         continue-on-error: true
@@ -49,11 +49,11 @@ jobs:
 
       - name: Print Kubescape result
         shell: bash
-        run: jq . results_${{ inputs.iteration }}.json
+        run: jq . scan_results_${{ inputs.iteration }}.json
 
       - name: Upload the JSON results artifact
         uses: actions/upload-artifact@v3
         with:
-          name: results_${{ inputs.iteration }}
-          path: results_${{ inputs.iteration }}.json
+          name: scan_results_${{ inputs.iteration }}
+          path: scan_results_${{ inputs.iteration }}.json
           if-no-files-found: error
