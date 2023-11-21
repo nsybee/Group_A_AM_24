@@ -314,20 +314,22 @@ def set_template(template: dict, check_id: str, check: dict) -> None:
 
                     elif check_id == "check_48":
                         # Append namespace LimitRange to the template
-                        limit_range1, limit_range2 = process_func(obj)
+                        # limit_range1, limit_range2 = process_func(obj)
+                        limit_range1 = process_func(obj)
                         global limit_range
                         if not limit_range:
                             template.append(limit_range1)
-                            template.append(limit_range2)
+                            # template.append(limit_range2)
                             limit_range = True
 
                     elif check_id == "check_49":
                         # Append namespace ResourceQuota to the template
-                        resource_quota1, resource_quota2 = process_func(obj)
+                        # resource_quota1, resource_quota2 = process_func(obj)
+                        resource_quota1 = process_func(obj)
                         global resource_quota
                         if not resource_quota:
                             template.append(resource_quota1)
-                            template.append(resource_quota2)
+                            # template.append(resource_quota2)
                             resource_quota = True
 
                     elif "value" in check:
