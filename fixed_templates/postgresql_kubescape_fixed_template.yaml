@@ -141,11 +141,11 @@ spec:
         imagePullPolicy: IfNotPresent
         securityContext:
           runAsUser: 1001
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
           capabilities:
             drop:
             - ALL
-          allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true
         env:
         - name: BITNAMI_DEBUG
           value: 'false'
@@ -232,11 +232,3 @@ spec:
       resources:
         requests:
           storage: 8Gi
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: test-network-policy
-spec:
-  podSelector: {}
-  policyTypes: []
