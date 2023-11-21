@@ -733,7 +733,7 @@ def set_limit_range(obj: dict) -> dict:
         if obj["metadata"]["namespace"] != "default":
             namespace = obj["metadata"]["namespace"]
 
-    limit_range1 = {
+    limit_range = {
         "apiVersion": "v1",
         "kind": "LimitRange",
         "metadata": {
@@ -754,28 +754,30 @@ def set_limit_range(obj: dict) -> dict:
             ]
         }
     }
-    limit_range2 = {
-        "apiVersion": "v1",
-        "kind": "LimitRange",
-        "metadata": {
-            "name": "cpu-min-max-demo-lr",
-            "namespace": "default"
-        },
-        "spec": {
-            "limits": [
-                {
-                    "max": {
-                        "cpu": "800m"
-                    },
-                    "min": {
-                        "cpu": "250m"
-                    },
-                    "type": "Container"
-                }
-            ]
-        }
-    }
-    return limit_range1, limit_range2
+    return limit_range
+
+    # limit_range2 = {
+    #     "apiVersion": "v1",
+    #     "kind": "LimitRange",
+    #     "metadata": {
+    #         "name": "cpu-min-max-demo-lr",
+    #         "namespace": "default"
+    #     },
+    #     "spec": {
+    #         "limits": [
+    #             {
+    #                 "max": {
+    #                     "cpu": "800m"
+    #                 },
+    #                 "min": {
+    #                     "cpu": "250m"
+    #                 },
+    #                 "type": "Container"
+    #             }
+    #         ]
+    #     }
+    # }
+    # return limit_range1, limit_range2
 
 
 def set_resource_quota(obj: dict) -> dict:
@@ -796,7 +798,7 @@ def set_resource_quota(obj: dict) -> dict:
         if obj["metadata"]["namespace"] != "default":
             namespace = obj["metadata"]["namespace"]
 
-    resource_quota1 = {
+    resource_quota = {
         "apiVersion": "v1",
         "kind": "ResourceQuota",
         "metadata": {
@@ -820,32 +822,34 @@ def set_resource_quota(obj: dict) -> dict:
             }
         }
     }
-    resource_quota2 = {
-        "apiVersion": "v1",
-        "kind": "ResourceQuota",
-        "metadata": {
-            "name": "pods-high",
-            "namespace": "default"
-        },
-        "spec": {
-            "hard": {
-                "cpu": "1000",
-                "memory": "200Gi",
-                "pods": "10"
-            },
-            "scopeSelector": {
-                "matchExpressions": [
-                    {
-                        "operator": "In",
-                        "scopeName": "PriorityClass",
-                        "values": ["high"]
-                    }
-                ]
-            }
-        }
-    }
+    return resource_quota
 
-    return resource_quota1, resource_quota2
+    # resource_quota2 = {
+    #     "apiVersion": "v1",
+    #     "kind": "ResourceQuota",
+    #     "metadata": {
+    #         "name": "pods-high",
+    #         "namespace": "default"
+    #     },
+    #     "spec": {
+    #         "hard": {
+    #             "cpu": "1000",
+    #             "memory": "200Gi",
+    #             "pods": "10"
+    #         },
+    #         "scopeSelector": {
+    #             "matchExpressions": [
+    #                 {
+    #                     "operator": "In",
+    #                     "scopeName": "PriorityClass",
+    #                     "values": ["high"]
+    #                 }
+    #             ]
+    #         }
+    #     }
+    # }
+
+    # return resource_quota1, resource_quota2
 
 
 def set_uid(obj: dict, uid=25000):
