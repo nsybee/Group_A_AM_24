@@ -117,40 +117,10 @@ spec:
     type: Container
 ---
 apiVersion: v1
-kind: LimitRange
-metadata:
-  name: cpu-min-max-demo-lr
-  namespace: default
-spec:
-  limits:
-  - max:
-      cpu: 800m
-    min:
-      cpu: 250m
-    type: Container
----
-apiVersion: v1
 kind: ResourceQuota
 metadata:
   name: pods-high
   namespace: busybox-namespace
-spec:
-  hard:
-    cpu: '1000'
-    memory: 200Gi
-    pods: '10'
-  scopeSelector:
-    matchExpressions:
-    - operator: In
-      scopeName: PriorityClass
-      values:
-      - high
----
-apiVersion: v1
-kind: ResourceQuota
-metadata:
-  name: pods-high
-  namespace: default
 spec:
   hard:
     cpu: '1000'
