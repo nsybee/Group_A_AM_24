@@ -16,7 +16,7 @@ metadata:
 spec:
   containers:
   - name: busybox-container
-    image: busybox:1@sha256:5cd228af7cde277502487da780b34ba111b8fcdcf37ca518d68c5ba565002b36
+    image: busybox:1-uclibc@sha256:4f726ca09728528f1ea7279591e8af331f29f4315226409a6968542d4c81da1d
     imagePullPolicy: Always
     command:
     - /bin/sh
